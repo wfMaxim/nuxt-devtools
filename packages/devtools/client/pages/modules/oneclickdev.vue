@@ -30,7 +30,7 @@ function readWebsiteLayoutSettings() {
           // Check if the rule is a media rule
           if (rule.type === CSSRule.MEDIA_RULE) {
             // Check if it matches the current view
-            if (window.matchMedia(rule.conditionText).matches) {
+            if (parent.window.matchMedia(rule.conditionText).matches) {
               // Iterate through the rules inside the media rule
               for (const innerRule of rule.cssRules) {
                 // Check if the rule applies to the :root selector
@@ -139,6 +139,8 @@ function readWebsiteLayoutSettings() {
   result.breakpoints = getBreakpoints()
   result.columnCounts = summarizeValues(getMediaQueryValues('--column-count'))
   result.columnGutters = summarizeValues(getMediaQueryValues('--column-gutter'))
+  result.columnOffsets = summarizeValues(getMediaQueryValues('--grid-offset'))
+  result.maxWidthGrid = getComputedStyle(parent.document.querySelector(':root')).getPropertyValue('--grid-max-width')
 
   return result
 }
@@ -163,6 +165,17 @@ function getMediaQueryGap(bp) {
   }
 
   return columnGutter
+}
+
+function getMediaQueryOffset(bp) {
+  let columnOffset
+
+  for (const item of layoutSettings.columnOffsets) {
+    if (bp >= item.breakpoint)
+      columnOffset = item.value
+  }
+
+  return columnOffset
 }
 
 const showGridLines = ref(parent.document.querySelector('html')?.classList?.contains('-show-grid') || false)
@@ -190,8 +203,10 @@ watch(showGridLines, () => {
               Show Grid Lines
             </span>
           </NCheckbox>
+
           <div mx--2 my1 h-1px border="b base" op75 />
-          <table w-full>
+
+          <table class="mediaquery-table" w-full>
             <thead border="b base" h-7>
               <tr>
                 <th text-left>
@@ -206,15 +221,22 @@ watch(showGridLines, () => {
                 <th text-left>
                   Gap
                 </th>
+                <th text-left>
+                  Offset
+                </th>
               </tr>
             </thead>
-            <tr v-for="(bp, i) in layoutSettings?.breakpoints" :key="bp.name" h-7>
+            <tr
+              v-for="(bp, i) in layoutSettings?.breakpoints"
+              :key="bp.name"
+              :class="{ active: (i === 0 && screenWidth > bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)
+                || (i === layoutSettings.breakpoints.length - 1 && screenWidth >= bp.value)
+                || (screenWidth >= bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value) }"
+              h-7
+            >
               <td>
                 <span mr1>{{ bp.name }}</span>
                 <NBadge
-                  v-if="(i === 0 && screenWidth > bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)
-                    || (i === layoutSettings.breakpoints.length - 1 && screenWidth >= bp.value)
-                    || (screenWidth >= bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)"
                   n="green"
                   title="Registered at runtime as a global component"
                   v-text="'active'"
@@ -225,8 +247,28 @@ watch(showGridLines, () => {
               </td>
               <td>{{ getMediaQueryColumns(bp.value) }}</td>
               <td>{{ getMediaQueryGap(bp.value) }}</td>
+              <td>{{ getMediaQueryOffset(bp.value) }}</td>
+            </tr>
+            <tr class="active">
+              <td>
+                nm
+                <NBadge
+                  n="green"
+                  title="Registered at runtime as a global component"
+                  class="active-badge"
+                  v-text="'active'"
+                />
+              </td>
+              <td>2200px</td>
+              <td>4</td>
+              <td>10px</td>
+              <td>72px</td>
             </tr>
           </table>
+
+          <div mx--2 my1 h-1px border="b base" op75 />
+
+          <h3>Max width grid: <b>{{ layoutSettings?.maxWidthGrid }}</b></h3>
         </NCard>
       </div>
       <div flex="~ col gap-2">
@@ -274,3 +316,16 @@ watch(showGridLines, () => {
     &copy; {{ new Date().getFullYear() }} oneclick.dev
   </HelpFab>
 </template>
+
+<style scoped>
+.mediaquery-table tr .active-badge {
+  display: none;
+}
+
+.mediaquery-table tr.active {
+  background-color: rgba(0, 220, 130, 0.1);
+}
+.mediaquery-table tr.active .active-badge {
+  display: inline;
+}
+</style>
