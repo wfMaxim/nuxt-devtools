@@ -24,7 +24,6 @@
     "**/playground",
     "**/playgrounds",
     "**/clones",
-    "**/docs",
     "./packages/devtools/client"
   ]
 }

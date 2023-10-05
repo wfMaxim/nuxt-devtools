@@ -5,7 +5,6 @@ export default antfu(
   {
     ingores: [
       'clones',
-      'docs',
       '**/*.sh',
     ],
   },
