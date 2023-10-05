@@ -239,6 +239,7 @@ watch(showGridLines, () => {
                 <NBadge
                   n="green"
                   title="Registered at runtime as a global component"
+                  class="active-badge"
                   v-text="'active'"
                 />
               </td>
@@ -248,21 +249,6 @@ watch(showGridLines, () => {
               <td>{{ getMediaQueryColumns(bp.value) }}</td>
               <td>{{ getMediaQueryGap(bp.value) }}</td>
               <td>{{ getMediaQueryOffset(bp.value) }}</td>
-            </tr>
-            <tr class="active">
-              <td>
-                nm
-                <NBadge
-                  n="green"
-                  title="Registered at runtime as a global component"
-                  class="active-badge"
-                  v-text="'active'"
-                />
-              </td>
-              <td>2200px</td>
-              <td>4</td>
-              <td>10px</td>
-              <td>72px</td>
             </tr>
           </table>
 
