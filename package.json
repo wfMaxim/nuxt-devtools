@@ -1,5 +1,5 @@
 {
-  "name": "@ocd-nuxt-devtools",
+  "name": "@nuxt-devtools/monorepo",
   "type": "module",
   "version": "1.0.0-beta.0",
   "private": true,
