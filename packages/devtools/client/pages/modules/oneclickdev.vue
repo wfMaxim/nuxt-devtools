@@ -24,7 +24,7 @@ function readWebsiteLayoutSettings() {
     const values = []
 
     // Iterate through all the stylesheets
-    for (const sheet of document.styleSheets) {
+    for (const sheet of parent.document.styleSheets) {
       try {
         // Iterate through the rules inside each stylesheet
         for (const rule of sheet.cssRules) {
@@ -118,6 +118,7 @@ function readWebsiteLayoutSettings() {
   result.columnCounts = getMediaQueryValues('--column-count')
   result.columnGutters = getMediaQueryValues('--column-gutter')
 
+  return { showGrid: true, breakpoints: [{ name: 'xs', value: 320, originalValue: '320px' }, { name: 'sm', value: 576, originalValue: '576px' }, { name: 'md', value: 768, originalValue: '768px' }, { name: 'lg', value: 992, originalValue: '992px' }, { name: 'xl', value: 1200, originalValue: '1200px' }], columnCounts: [], columnGutters: [] }
   return result
 }
 
@@ -147,10 +148,6 @@ watch(showGridLines, () => {
             </span>
           </NCheckbox>
           <div mx--2 my1 h-1px border="b base" op75 />
-          <span>{{ screenWidth }}</span>
-          <div mx--2 my1 h-1px border="b base" op75 />
-          {{ layoutSettings }}
-          <div mx--2 my1 h-1px border="b base" op75 />
           <table w-full>
             <thead border="b base" h-7>
               <tr>
@@ -168,60 +165,23 @@ watch(showGridLines, () => {
                 </th>
               </tr>
             </thead>
-            <tr h-7>
+            <tr v-for="(bp, i) in layoutSettings?.breakpoints" :key="bp.name" h-7>
               <td>
-                <span mr1>default</span>
-              </td>
-              <td op50>
-                0px
-              </td>
-              <td>4</td>
-              <td>10px</td>
-            </tr>
-            <tr h-7>
-              <td>
-                <span mr1>xs</span>
+                <span mr1>{{ bp.name }}</span>
                 <NBadge
+                  v-if="(i === 0 && screenWidth > bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)
+                    || (i === layoutSettings.breakpoints.length - 1 && screenWidth >= bp.value)
+                    || (screenWidth >= bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)"
                   n="green"
                   title="Registered at runtime as a global component"
                   v-text="'active'"
                 />
               </td>
-              <td>320px</td>
-              <td>4</td>
-              <td>10px</td>
-            </tr>
-            <tr h-7>
-              <td>
-                <span mr1>sm</span>
+              <td op50>
+                {{ bp.originalValue }}
               </td>
-              <td>576px</td>
-              <td>4</td>
-              <td>10px</td>
-            </tr>
-            <tr h-7>
-              <td>
-                <span mr1>md</span>
-              </td>
-              <td>768px</td>
-              <td>8</td>
-              <td>10px</td>
-            </tr>
-            <tr h-7>
-              <td>
-                <span mr1>lg</span>
-              </td>
-              <td>992px</td>
-              <td>12</td>
-              <td>10px</td>
-            </tr>
-            <tr h-7>
-              <td>
-                <span mr1>xl</span>
-              </td>
-              <td>1200px</td>
-              <td>12</td>
-              <td>10px</td>
+              <td>X</td>
+              <td>X</td>
             </tr>
           </table>
         </NCard>
