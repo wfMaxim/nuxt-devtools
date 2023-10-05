@@ -52,13 +52,23 @@ const metricsLoading = computed(() => client.value?.metrics.loading())
       <!-- Main Grid -->
       <div flex="~ gap2 wrap">
         <div p4 theme-card-green flex="~ col auto">
-          <div logos-nuxt-icon text-3xl />
-          <NpmVersionCheck package-name="nuxt" :options="{ dev: true }" />
+          <div>
+            <div logos-nuxt-icon mr2 text-2xl />
+            <NpmVersionCheck package-name="nuxt" :options="{ dev: true }" />
+          </div>
+
+          <div v-if="vueVersion">
+            <div logos-vue mr2 text-2xl />
+            <code>v{{ vueVersion }}</code>
+          </div>
         </div>
-        <div v-if="vueVersion" p4 theme-card-green flex="~ col auto">
-          <div logos-vue text-3xl />
-          <code>v{{ vueVersion }}</code>
-        </div>
+        <NuxtLink
+          v-if="client" min-w-40 p4 theme-card-lime flex="~ col auto"
+          to="/modules/oneclickdev"
+        >
+          <div carbon-cursor-1 text-3xl />
+          <div>oneclick.dev</div>
+        </NuxtLink>
         <template v-if="config">
           <NuxtLink
             v-if="config && config.pages && client" min-w-40 p4 theme-card-lime flex="~ col auto"

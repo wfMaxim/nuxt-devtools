@@ -8,7 +8,7 @@ definePageMeta({
     const client = useClient()
     return () => !!client.value
   },
-  order: 1,
+  order: 1.5,
 })
 
 const router = useClientRouter()
