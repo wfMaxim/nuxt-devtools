@@ -137,7 +137,6 @@ function readWebsiteLayoutSettings() {
       )
   }
 
-  result.showGrid = parent.document.querySelector('html').classList.contains('-show-grid')
   result.breakpoints = getBreakpoints()
   result.columnCounts = summarizeValues(getMediaQueryValues('--column-count'))
   result.columnGutters = summarizeValues(getMediaQueryValues('--column-gutter'))
@@ -232,6 +231,9 @@ watch(showGridLines, () => {
         </NCard>
       </div>
       <div flex="~ col gap-2">
+        <p>
+          {{ layoutSettings }}
+        </p>
         <!-- <h3 text-lg>
           Routes (met search + ververs)
         </h3>
