@@ -32,7 +32,8 @@
     "dev": "nuxi dev client",
     "dev:playground": "pnpm build && nuxi dev playground",
     "dev:prepare": "nuxi prepare client",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "publish-public": "pnpm publish --access public"
   },
   "peerDependencies": {
     "nuxt": "^3.7.4",
