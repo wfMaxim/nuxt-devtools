@@ -59,6 +59,30 @@ function readWebsiteLayoutSettings() {
     return values
   }
 
+  function summarizeValues(data) {
+    const sortMediaQueries = (a, b) => {
+      const minWidthA = Number.parseInt(a.mediaQuery.match(/\d+/)[0])
+      const minWidthB = Number.parseInt(b.mediaQuery.match(/\d+/)[0])
+      return minWidthA - minWidthB
+    }
+
+    data = data.sort(sortMediaQueries)
+
+    const values = []
+    let previousValue = ''
+    for (const item of data) {
+      if (item.value !== previousValue) {
+        previousValue = item.value
+        values.push({
+          breakpoint: Number.parseFloat(item.mediaQuery.match(/\d+/)[0]),
+          value: item.value,
+        })
+      }
+    }
+
+    return values
+  }
+
   // BREAKPOINTS
   function getBreakpoints() {
     const rootStyles = getComputedStyle(parent.document.documentElement)
@@ -115,16 +139,43 @@ function readWebsiteLayoutSettings() {
 
   result.showGrid = parent.document.querySelector('html').classList.contains('-show-grid')
   result.breakpoints = getBreakpoints()
-  result.columnCounts = getMediaQueryValues('--column-count')
-  result.columnGutters = getMediaQueryValues('--column-gutter')
+  result.columnCounts = summarizeValues(getMediaQueryValues('--column-count'))
+  result.columnGutters = summarizeValues(getMediaQueryValues('--column-gutter'))
 
-  return { showGrid: true, breakpoints: [{ name: 'xs', value: 320, originalValue: '320px' }, { name: 'sm', value: 576, originalValue: '576px' }, { name: 'md', value: 768, originalValue: '768px' }, { name: 'lg', value: 992, originalValue: '992px' }, { name: 'xl', value: 1200, originalValue: '1200px' }], columnCounts: [], columnGutters: [] }
+  return {
+    showGrid: true,
+    breakpoints: [{ name: 'xs', value: 320, originalValue: '320px' }, { name: 'sm', value: 576, originalValue: '576px' }, { name: 'md', value: 768, originalValue: '768px' }, { name: 'lg', value: 992, originalValue: '992px' }, { name: 'xl', value: 1200, originalValue: '1200px' }],
+    columnCounts: [{ breakpoint: 320, value: '4' }, { breakpoint: 768, value: '8' }, { breakpoint: 1000, value: '12' }],
+    columnGutters: [{ breakpoint: 320, value: '10' }],
+  }
   return result
 }
 
-const showGridLines = ref(true)
+function getMediaQueryColumns(bp) {
+  let columnCount
+
+  for (const item of layoutSettings.columnCounts) {
+    if (bp >= item.breakpoint)
+      columnCount = item.value
+  }
+
+  return columnCount
+}
+
+function getMediaQueryGap(bp) {
+  let columnGutter
+
+  for (const item of layoutSettings.columnGutters) {
+    if (bp >= item.breakpoint)
+      columnGutter = item.value
+  }
+
+  return columnGutter
+}
+
+const showGridLines = ref(parent.document.querySelector('html')?.classList?.contains('-show-grid') || false)
 watch(showGridLines, () => {
-  parent.document.body.classList[showGridLines.value ? 'add' : 'remove']('show-grid-lines')
+  parent.document.querySelector('html').classList[showGridLines.value ? 'add' : 'remove']('-show-grid')
 })
 </script>
 
@@ -180,14 +231,14 @@ watch(showGridLines, () => {
               <td op50>
                 {{ bp.originalValue }}
               </td>
-              <td>X</td>
-              <td>X</td>
+              <td>{{ getMediaQueryColumns(bp.value) }}</td>
+              <td>{{ getMediaQueryGap(bp.value) }}</td>
             </tr>
           </table>
         </NCard>
       </div>
       <div flex="~ col gap-2">
-        <h3 text-lg>
+        <!-- <h3 text-lg>
           Routes (met search + ververs)
         </h3>
 
@@ -213,7 +264,7 @@ watch(showGridLines, () => {
 
         <h3 mt2 text-lg>
           Login
-        </h3>
+        </h3> -->
       </div>
     </div>
   </div>
