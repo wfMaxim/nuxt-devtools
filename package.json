@@ -10,7 +10,7 @@
     "dev": "pnpm run stub && pnpm -C packages/devtools dev",
     "lint": "eslint .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "pnpm test && bumpp -r -x \"pnpm run changelog\" --all && pnpm -r publish",
+    "release": "pnpm test && bumpp -r -x \"pnpm run changelog\" --all && pnpm -r publish --access public",
     "test": "pnpm lint",
     "typecheck": "vue-tsc --noEmit",
     "postinstall": "npx simple-git-hooks",
