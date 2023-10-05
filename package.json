@@ -14,7 +14,8 @@
     "test": "pnpm lint",
     "typecheck": "vue-tsc --noEmit",
     "postinstall": "npx simple-git-hooks",
-    "prepare": "pnpm -r --filter=\"./packages/*\" run dev:prepare"
+    "prepare": "pnpm -r --filter=\"./packages/*\" run dev:prepare",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "simple-git-hooks": "^2.9.0"
