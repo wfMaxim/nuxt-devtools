@@ -142,12 +142,6 @@ function readWebsiteLayoutSettings() {
   result.columnCounts = summarizeValues(getMediaQueryValues('--column-count'))
   result.columnGutters = summarizeValues(getMediaQueryValues('--column-gutter'))
 
-  return {
-    showGrid: true,
-    breakpoints: [{ name: 'xs', value: 320, originalValue: '320px' }, { name: 'sm', value: 576, originalValue: '576px' }, { name: 'md', value: 768, originalValue: '768px' }, { name: 'lg', value: 992, originalValue: '992px' }, { name: 'xl', value: 1200, originalValue: '1200px' }],
-    columnCounts: [{ breakpoint: 320, value: '4' }, { breakpoint: 768, value: '8' }, { breakpoint: 1000, value: '12' }],
-    columnGutters: [{ breakpoint: 320, value: '10' }],
-  }
   return result
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "@wallywallfar/devtools",
   "type": "module",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "private": false,
   "license": "MIT",
   "repository": "nuxt/devtools",
