@@ -271,7 +271,7 @@ watch(showGridLines, () => {
           :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/hybrid') > -1).length}`"
         >
           <ComponentItem
-            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/hybrid') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(20, c.pascalName?.length - 20) } }))"
+            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/hybrid') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(2, c.pascalName?.length - 2) } }))"
             :key="c.component.filePath"
             v-bind="c"
           />
@@ -284,7 +284,7 @@ watch(showGridLines, () => {
           :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1).length}`"
         >
           <ComponentItem
-            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(21, c.pascalName?.length - 21) } }))"
+            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(2, c.pascalName?.length - 2) } }))"
             :key="c.component.filePath"
             v-bind="c"
           />
@@ -297,7 +297,7 @@ watch(showGridLines, () => {
           :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/layout') > -1).length}`"
         >
           <ComponentItem
-            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/layout') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(20, c.pascalName?.length - 20) } }))"
+            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/layout') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(2, c.pascalName?.length - 2) } }))"
             :key="c.component.filePath"
             v-bind="c"
           />
