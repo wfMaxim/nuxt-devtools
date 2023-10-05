@@ -23,7 +23,6 @@
   "devDependencies": {
     "@antfu/eslint-config": "^1.0.0-beta.18",
     "@antfu/ni": "^0.21.8",
-    "@nuxt/devtools": "workspace:*",
     "@nuxt/devtools-ui-kit": "workspace:*",
     "@nuxt/module-builder": "^0.5.2",
     "@nuxt/schema": "^3.7.4",
@@ -33,6 +32,7 @@
     "@types/which": "^3.0.0",
     "@types/ws": "^8.5.6",
     "@unocss/eslint-config": "^0.56.4",
+    "@wallywallfar/devtools": "workspace:*",
     "bumpp": "^9.2.0",
     "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.50.0",

@@ -7,8 +7,8 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@nuxt/devtools": "workspace:^",
     "@types/node": "^20.8.0",
+    "@wallywallfar/devtools": "workspace:^",
     "nuxt": "^3.7.4"
   }
 }

@@ -31,7 +31,7 @@ export type { ModuleOptions }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@nuxt/devtools',
+    name: '@wallywallfar/devtools',
     configKey: 'devtools',
   },
   defaults: defaultOptions,

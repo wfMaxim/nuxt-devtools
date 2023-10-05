@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -10,6 +10,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      simple-git-hooks:
+        specifier: ^2.9.0
+        version: 2.9.0
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^1.0.0-beta.18
@@ -17,9 +21,6 @@ importers:
       '@antfu/ni':
         specifier: ^0.21.8
         version: 0.21.8
-      '@nuxt/devtools':
-        specifier: workspace:*
-        version: link:packages/devtools
       '@nuxt/devtools-ui-kit':
         specifier: workspace:*
         version: link:packages/devtools-ui-kit
@@ -47,6 +48,9 @@ importers:
       '@unocss/eslint-config':
         specifier: ^0.56.4
         version: 0.56.4(eslint@8.50.0)(typescript@5.2.2)
+      '@wallywallfar/devtools':
+        specifier: workspace:*
+        version: link:packages/devtools
       bumpp:
         specifier: ^9.2.0
         version: 9.2.0
@@ -74,9 +78,6 @@ importers:
       pathe:
         specifier: ^1.1.1
         version: 1.1.1
-      simple-git-hooks:
-        specifier: ^2.9.0
-        version: 2.9.0
       taze:
         specifier: ^0.11.3
         version: 0.11.3
@@ -231,9 +232,6 @@ importers:
       '@nuxt/content':
         specifier: ^2.8.5
         version: 2.8.5(rollup@3.29.1)(vue@3.3.4)
-      '@nuxt/devtools':
-        specifier: workspace:*
-        version: 'link:'
       '@nuxtjs/color-mode':
         specifier: ^3.3.0
         version: 3.3.0(rollup@3.29.1)
@@ -261,6 +259,9 @@ importers:
       '@vueuse/nuxt':
         specifier: ^10.4.1
         version: 10.4.1(nuxt@3.7.4)(rollup@3.29.1)(vue@3.3.4)
+      '@wallywallfar/devtools':
+        specifier: workspace:*
+        version: 'link:'
       esno:
         specifier: ^0.17.0
         version: 0.17.0
@@ -434,7 +435,7 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
     devDependencies:
-      '@nuxt/devtools':
+      '@wallywallfar/devtools':
         specifier: workspace:*
         version: link:../devtools
       nuxt:
@@ -508,9 +509,6 @@ importers:
       '@iconify-json/carbon':
         specifier: ^1.1.21
         version: 1.1.21
-      '@nuxt/devtools':
-        specifier: workspace:*
-        version: link:../../packages/devtools
       '@nuxt/devtools-ui-kit':
         specifier: workspace:*
         version: link:../../packages/devtools-ui-kit
@@ -523,6 +521,9 @@ importers:
       '@nuxt/test-utils':
         specifier: ^3.7.4
         version: 3.7.4(rollup@3.29.1)(vitest@0.34.6)(vue@3.3.4)
+      '@wallywallfar/devtools':
+        specifier: workspace:*
+        version: link:../../packages/devtools
       eslint:
         specifier: ^8.50.0
         version: 8.50.0
@@ -559,12 +560,12 @@ importers:
 
   playgrounds/tab-timeline:
     devDependencies:
-      '@nuxt/devtools':
-        specifier: workspace:^
-        version: link:../../packages/devtools
       '@types/node':
         specifier: ^20.8.0
         version: 20.8.0
+      '@wallywallfar/devtools':
+        specifier: workspace:^
+        version: link:../../packages/devtools
       nuxt:
         specifier: ^3.7.4
         version: 3.7.4(@parcel/watcher@2.3.0)(@types/node@20.8.0)(eslint@8.50.0)(rollup@3.29.1)(typescript@5.2.2)(vue-tsc@1.8.15)
@@ -9516,7 +9517,7 @@ packages:
     resolution: {integrity: sha512-waSQ5paUQtyGC0ZxlHmcMmD9I1rRXauikBwX31bX58l5vTOhCEcBC5Bi+ZDkPXTjDnZAF8TbCqKBY+9+sVPScw==}
     hasBin: true
     requiresBuild: true
-    dev: true
+    dev: false
 
   /simple-git@3.20.0:
     resolution: {integrity: sha512-ozK8tl2hvLts8ijTs18iFruE+RoqmC/mqZhjs/+V7gS5W68JpJ3+FCTmLVqmR59MaUQ52MfGQuWsIqfsTbbJ0Q==}
