@@ -231,6 +231,9 @@ watch(showGridLines, () => {
         </NCard>
       </div>
       <div flex="~ col gap-2">
+        <h3 text-lg>
+          {{ screenWidth }}
+        </h3>
         <p>
           {{ layoutSettings }}
         </p>
