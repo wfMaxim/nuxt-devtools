@@ -9,11 +9,10 @@ definePageMeta({
   order: 1,
 })
 
-const screenWidth = ref(window.innerWidth)
+const screenWidth = ref(parent.window.innerWidth)
 parent.addEventListener('resize', () => {
-  screenWidth.value = window.innerWidth
+  screenWidth.value = parent.window.innerWidth
 })
-// TODO remove resize eventlistener on leave
 
 const layoutSettings = readWebsiteLayoutSettings()
 
@@ -231,12 +230,6 @@ watch(showGridLines, () => {
         </NCard>
       </div>
       <div flex="~ col gap-2">
-        <h3 text-lg>
-          {{ screenWidth }}
-        </h3>
-        <p>
-          {{ layoutSettings }}
-        </p>
         <!-- <h3 text-lg>
           Routes (met search + ververs)
         </h3>
