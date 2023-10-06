@@ -9,6 +9,9 @@ definePageMeta({
   order: 1,
 })
 
+const email = ref('')
+const password = ref('')
+
 const components = useComponents()
 
 const screenWidth = ref(parent.window.innerWidth)
@@ -268,6 +271,7 @@ watch(showGridLines, () => {
           v-if="components?.filter(c => c.shortPath?.indexOf('components/building-blocks/hybrid') > -1).length"
           icon="carbon-nominal"
           text="Hybrid components"
+          :open="false"
           :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/hybrid') > -1).length}`"
         >
           <ComponentItem
@@ -278,22 +282,10 @@ watch(showGridLines, () => {
         </NSectionBlock>
 
         <NSectionBlock
-          v-if="components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1).length"
-          icon="carbon-document"
-          text="Content components"
-          :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1).length}`"
-        >
-          <ComponentItem
-            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(2, c.pascalName?.length - 2) } }))"
-            :key="c.component.filePath"
-            v-bind="c"
-          />
-        </NSectionBlock>
-
-        <NSectionBlock
           v-if="components?.filter(c => c.shortPath?.indexOf('components/building-blocks/layout') > -1).length"
           icon="carbon-template"
           text="Layout components"
+          :open="false"
           :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/layout') > -1).length}`"
         >
           <ComponentItem
@@ -303,49 +295,48 @@ watch(showGridLines, () => {
           />
         </NSectionBlock>
 
-        <!-- <h3 text-lg>
-          Routes (met search + ververs)
-        </h3>
-
-        <h3 text-lg>
-          Products (met search + ververs)
-        </h3>
-
-        <h3 text-lg>
-          Vrije blokken tester
-        </h3>
-
-        <h3>
-          Content editen
-        </h3>
-
-        <p>
-          1. Toggle hier editor<br>
-          2. Alle editable velden worden gemarkeerd in DOM<br>
-          3. Klik op editable veld om te editen<br>
-          4. devtools opent met editor<br>
-          5. Saven via oneclick.dev CMS
-        </p>
-
-        <h3 mt2 text-lg>
-          Login
-        </h3> -->
+        <NSectionBlock
+          v-if="components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1).length"
+          icon="carbon-document"
+          text="Content components"
+          :open="false"
+          :description="`Total components: ${components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1).length}`"
+        >
+          <ComponentItem
+            v-for="c of components?.filter(c => c.shortPath?.indexOf('components/building-blocks/content') > -1)?.map(c => ({ component: { ...c, pascalName: c.pascalName?.substr(2, c.pascalName?.length - 2) } }))"
+            :key="c.component.filePath"
+            v-bind="c"
+          />
+        </NSectionBlock>
       </div>
     </div>
   </div>
 
-  <HelpFab>
-    <h2>Documentation</h2>
+  <SettingsFab>
+    <h2>Connect project</h2>
 
-    <a href="https://oneclick.dev" target="_blank">
-      <NButton icon="i-carbon-document" n="primary">
-        oneclick.dev
-      </NButton>
-    </a>
+    <p>
+      First, sign in with your oneclick.dev account.
+    </p>
 
-    <h3>Credits</h3>
-    &copy; {{ new Date().getFullYear() }} oneclick.dev
-  </HelpFab>
+    <NTextInput
+      placeholder="E-mail"
+      icon="carbon-email"
+      n="primary" flex-auto
+      class="mb-2 px-5 py-3"
+      :value="email"
+    />
+    <NTextInput
+      placeholder="Password"
+      icon="carbon-password"
+      n="primary" flex-auto
+      class="mb-4 px-5 py-3"
+      :value="password"
+    />
+    <NButton n="disabled" class="px-5 py-3">
+      Log in (coming soon)
+    </NButton>
+  </SettingsFab>
 </template>
 
 <style scoped>
