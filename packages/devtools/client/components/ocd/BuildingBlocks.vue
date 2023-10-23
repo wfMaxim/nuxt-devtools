@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // BUILDING BLOCKS
 const components = useComponents()
+const client = useClient()
 
 const componentGroups = [
   {
@@ -23,6 +24,8 @@ const componentGroups = [
 function test(component) {
   // eslint-disable-next-line no-console
   console.log('component clicked: ', component)
+  // eslint-disable-next-line no-console
+  console.log('all components', client.value?.nuxt?.vueApp._context.components)
 }
 </script>
 
