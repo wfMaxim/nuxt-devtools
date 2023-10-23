@@ -109,11 +109,18 @@ const filtered = computed(() => {
     :open="filtered.user.length <= DETAILS_MAX_ITEMS"
     :description="`Total components: ${filtered.count.user}`"
   >
-    <ComponentItem
+    <!-- <ComponentItem
       v-for="c of filtered.user"
       :key="c.component.filePath"
       v-bind="c"
-    />
+    /> -->
+
+    <div
+      v-for="c of filtered.user"
+      :key="c.component.filePath"
+    >
+      {{ c.component }}
+    </div>
   </NSectionBlock>
   <NSectionBlock
     v-if="filtered.runtime.length"

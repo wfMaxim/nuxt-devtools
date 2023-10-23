@@ -6,6 +6,8 @@ import { resolve } from 'pathe'
 import { colors } from 'consola/utils'
 import { logger } from '@nuxt/kit'
 
+import { getComponentProps } from '../utils/fs'
+
 import type { HookInfo, NuxtDevtoolsServerContext, ServerFunctions } from '../types'
 import { setupHooksDebug } from '../runtime/shared/hooks'
 import { getDevAuthToken } from '../dev-auth'
@@ -26,9 +28,20 @@ export function setupGeneralRPC({ nuxt, options, refresh, openInEditorHooks }: N
 
   // Nuxt Hooks to collect data
   nuxt.hook('components:extend', (v) => {
-    components.length = 0
     components.push(...v)
     components.sort((a, b) => a.pascalName.localeCompare(b.pascalName))
+
+    components.forEach((c) => {
+      getComponentProps(c.filePath).then((props) => {
+        if (props && Object.keys(props).length > 0) {
+          c.props = props
+          /* eslint-disable-next-line no-console */
+          console.log('propzzzz', props)
+          refresh('getComponents')
+        }
+      })
+    })
+
     refresh('getComponents')
   })
   nuxt.hook('imports:extend', (v) => {

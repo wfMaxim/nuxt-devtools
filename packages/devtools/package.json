@@ -44,6 +44,7 @@
     "@nuxt/devtools-kit": "workspace:*",
     "@nuxt/devtools-wizard": "workspace:*",
     "@nuxt/kit": "^3.7.4",
+    "@vuedoc/parser": "4.0.0-beta12",
     "birpc": "^0.2.14",
     "consola": "^3.2.3",
     "error-stack-parser-es": "^0.1.1",

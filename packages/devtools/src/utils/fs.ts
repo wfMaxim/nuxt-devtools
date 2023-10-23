@@ -40,3 +40,30 @@ export async function getFolderSize(
 
   return sizes.reduce((total, size) => (total += size), 0)
 }
+
+export async function getComponentProps(componentPath: string) {
+  let componentOptions
+
+  try {
+    const component = await import(`${componentPath}`)
+    componentOptions = component.default || component
+  }
+  catch (error) {
+    console.error(`Error while importing component: ${error}`)
+    return {}
+  }
+
+  const props = componentOptions.props || {}
+  const propDetails = {}
+
+  Object.keys(props).forEach((key) => {
+    const prop = props[key]
+    propDetails[key] = {
+      type: prop.type ? prop.type.name || prop.type.toString() : 'Unknown',
+      required: prop.required || false,
+      default: prop.default,
+    }
+  })
+
+  return propDetails
+}
