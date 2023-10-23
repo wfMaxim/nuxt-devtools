@@ -189,16 +189,15 @@ watch(showGridLines, () => {
         <tr
           v-for="(bp, i) in layoutSettings?.breakpoints"
           :key="bp.name"
+          h-7
           :class="{ active: (i === 0 && screenWidth > bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value)
             || (i === layoutSettings.breakpoints.length - 1 && screenWidth >= bp.value)
             || (screenWidth >= bp.value && screenWidth < layoutSettings.breakpoints[i + 1].value) }"
-          h-7
         >
           <td>
             <span mr1>{{ bp.name }}</span>
             <NBadge
               n="green"
-              title="Registered at runtime as a global component"
               class="active-badge"
               v-text="'active'"
             />

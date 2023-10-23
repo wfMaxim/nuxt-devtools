@@ -4,9 +4,15 @@ function getHeadingFontStyles() {
 
   ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((tag) => {
     const heading = document.createElement(tag)
-    document.body.appendChild(heading)
+    parent.window.document.body.appendChild(heading)
+
+    // eslint-disable-next-line no-console
+    console.log('heading', heading)
+    // eslint-disable-next-line no-console
+    console.log(getComputedStyle(heading).font)
+
     headingStyles[tag] = getComputedStyle(heading).font
-    document.body.removeChild(heading)
+    parent.window.document.body.removeChild(heading)
   })
 
   return headingStyles
@@ -18,7 +24,9 @@ const headingFontStyles = ref(getHeadingFontStyles())
 <template>
   <div flex="~ col gap-2">
     <h3 text-lg>
-      Fonts
+      Fonts <button @click="getHeadingFontStyles">
+        getHeadingFontStyles
+      </button>
     </h3>
 
     <NCard p4 flex="~ col gap-2">
