@@ -109,11 +109,13 @@ async function extractPropsFromCompositionAPI(scriptContent) {
     else {
       /* eslint-disable-next-line no-console */
       console.log('No props found')
+      return []
     }
   }
   catch (error) {
     /* eslint-disable-next-line no-console */
     console.log(error)
+    return []
   }
 };
 
@@ -125,7 +127,7 @@ function extractPropsFromOptionsAPI(scriptContent) {
   if (match) {
     const propsContent = match[1].trim()
     /* eslint-disable-next-line no-console */
-    console.log('Props Content:', propsContent)
+    return propsContent
   }
   else {
     /* eslint-disable-next-line no-console */

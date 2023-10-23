@@ -33,10 +33,10 @@ export function setupGeneralRPC({ nuxt, options, refresh, openInEditorHooks }: N
 
     components.forEach((c) => {
       getComponentProps(c.filePath).then((props) => {
-        if (props && Object.keys(props).length > 0) {
+        /* eslint-disable-next-line no-console */
+        console.log('propzzzzzs', props)
+        if (props) {
           c.props = props
-          /* eslint-disable-next-line no-console */
-          console.log('propzzzz', props)
           refresh('getComponents')
         }
         else {
