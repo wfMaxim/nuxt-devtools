@@ -68,7 +68,8 @@ export async function getComponentProps(componentPath) {
       // Here you can use scriptContent to get your component props
       // You can either parse the scriptContent manually or try to execute it in a safe environment
       /* eslint-disable-next-line no-console */
-      console.log('Script Setup Content:', await extractPropsFromScript(scriptContent))
+      console.log('Script Setup Content:', extractPropsFromScript(scriptContent))
+      return scriptContent || []
     }
 
     if (descriptor.script) {
@@ -76,7 +77,8 @@ export async function getComponentProps(componentPath) {
       // Here you can use scriptContent to get your component props
       // You can either parse the scriptContent manually or try to execute it in a safe environment
       /* eslint-disable-next-line no-console */
-      console.log('Script Content:', await extractPropsFromScript(scriptContent))
+      console.log('Script Content:', extractPropsFromScript(scriptContent))
+      return scriptContent || []
     }
   }
   catch (error) {
@@ -86,7 +88,7 @@ export async function getComponentProps(componentPath) {
   }
 }
 
-async function extractPropsFromScript(scriptContent) {
+function extractPropsFromScript(scriptContent) {
   const isCompositionAPI = scriptContent.includes('defineProps') || scriptContent.includes('<script setup>')
 
   if (isCompositionAPI)
@@ -95,7 +97,7 @@ async function extractPropsFromScript(scriptContent) {
     return extractPropsFromOptionsAPI(scriptContent)
 };
 
-async function extractPropsFromCompositionAPI(scriptContent) {
+function extractPropsFromCompositionAPI(scriptContent) {
   try {
     const propsRegex = /defineProps\(([\s\S]*?)\)/
     const match = scriptContent.match(propsRegex)
