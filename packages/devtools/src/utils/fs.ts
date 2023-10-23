@@ -118,31 +118,17 @@ async function extractPropsFromCompositionAPI(scriptContent) {
 };
 
 function extractPropsFromOptionsAPI(scriptContent) {
-  // First, you need to isolate the export default object
-  const exportDefaultRegex = /export\s+default\s+({[\s\S]*})/
-  const match = scriptContent.match(exportDefaultRegex)
+  // Find the props property in the exported object
+  const propsRegex = /props:\s*({[^}]*})/
+  const match = scriptContent.match(propsRegex)
 
   if (match) {
-    const exportedObjectContent = match[1].trim()
-
-    // Now, find the props property inside the exported object
-    // This regex is very simplistic and assumes that props are defined as an object literal
-    const propsRegex = /props:\s*({[\s\S]*})/
-    const propsMatch = exportedObjectContent.match(propsRegex)
-
-    if (propsMatch) {
-      const propsContent = propsMatch[1].trim()
-      // TODO: You would need to parse propsContent here to actually extract the prop definitions.
-      // This could be complex depending on how props are defined and might require a full JS parser.
-      return propsContent
-    }
-    else {
-      /* eslint-disable-next-line no-console */
-      console.log('No props found in exported object')
-    }
+    const propsContent = match[1].trim()
+    /* eslint-disable-next-line no-console */
+    console.log('Props Content:', propsContent)
   }
   else {
     /* eslint-disable-next-line no-console */
-    console.log('No export default statement found')
+    console.log('No props found in exported object')
   }
 }

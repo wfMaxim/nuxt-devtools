@@ -39,6 +39,9 @@ export function setupGeneralRPC({ nuxt, options, refresh, openInEditorHooks }: N
           console.log('propzzzz', props)
           refresh('getComponents')
         }
+        else {
+          c.props = []
+        }
       })
     })
 
