@@ -36,6 +36,8 @@ export function setupGeneralRPC({ nuxt, options, refresh, openInEditorHooks }: N
         /* eslint-disable-next-line no-console */
         console.log('propzzzzzs', props)
         if (props) {
+          /* eslint-disable-next-line no-console */
+          console.log('added props')
           c.props = props
           refresh('getComponents')
         }

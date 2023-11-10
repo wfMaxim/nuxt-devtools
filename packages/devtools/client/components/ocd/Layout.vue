@@ -20,20 +20,17 @@ function readWebsiteLayoutSettings() {
         for (const rule of sheet.cssRules) {
           // Check if the rule is a media rule
           if (rule.type === CSSRule.MEDIA_RULE) {
-            // Check if it matches the current view
-            if (parent.window.matchMedia(rule.conditionText).matches) {
-              // Iterate through the rules inside the media rule
-              for (const innerRule of rule.cssRules) {
-                // Check if the rule applies to the :root selector
-                if (innerRule.selectorText === ':root') {
-                  // Get the value of the variable
-                  const value = innerRule.style.getPropertyValue(variableName)
-                  if (value) {
-                    values.push({
-                      mediaQuery: rule.conditionText,
-                      value: value.trim(),
-                    })
-                  }
+            // Iterate through the rules inside the media rule without checking if it matches
+            for (const innerRule of rule.cssRules) {
+              // Check if the rule applies to the :root selector
+              if (innerRule.selectorText === ':root') {
+                // Get the value of the variable
+                const value = innerRule.style.getPropertyValue(variableName)
+                if (value) {
+                  values.push({
+                    mediaQuery: rule.conditionText,
+                    value: value.trim(),
+                  })
                 }
               }
             }
@@ -41,8 +38,7 @@ function readWebsiteLayoutSettings() {
         }
       }
       catch (err) {
-        // Catch any errors (e.g., cross-origin issues)
-        console.error(err)
+        console.error('Error at getMediaQueryValues: ', err)
       }
     }
 

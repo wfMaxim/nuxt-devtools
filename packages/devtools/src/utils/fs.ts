@@ -104,13 +104,22 @@ function extractPropsFromCompositionAPI(scriptContent) {
 
     if (match) {
       const propsContent = match[1].trim()
-      // TODO: You would need to parse propsContent here to actually extract the prop types.
-      // This could be complex depending on how props are defined and might require a full JS parser.
-      return propsContent
+
+      // Match only the first level of keys in the object literal
+      const propNamesRegex = /([a-zA-Z$_][a-zA-Z\d$_]*)\s*:(?=\s*\{)/g
+      const propNames = []
+      let propMatch
+
+      // Using .exec() in a loop to find matches since it can find multiple matches
+      /* eslint-disable-next-line no-cond-assign */
+      while ((propMatch = propNamesRegex.exec(propsContent)) !== null) {
+        // The first group in the regex contains the prop name
+        propNames.push(propMatch[1])
+      }
+
+      return propNames
     }
     else {
-      /* eslint-disable-next-line no-console */
-      console.log('No props found')
       return []
     }
   }
@@ -119,20 +128,48 @@ function extractPropsFromCompositionAPI(scriptContent) {
     console.log(error)
     return []
   }
-};
+}
 
 function extractPropsFromOptionsAPI(scriptContent) {
-  // Find the props property in the exported object
-  const propsRegex = /props:\s*({[^}]*})/
-  const match = scriptContent.match(propsRegex)
+  try {
+    // Match the props definition, which can be an object or an array
+    const propsRegex = /props:\s*({[\s\S]*?}|\[[^\]]*\])/
+    const match = scriptContent.match(propsRegex)
+    if (match) {
+      const propsContent = match[1].trim()
 
-  if (match) {
-    const propsContent = match[1].trim()
-    /* eslint-disable-next-line no-console */
-    return propsContent
+      // Check if the props are defined as an array
+      if (propsContent.startsWith('[')) {
+        // Extracting prop names from array syntax
+        return propsContent.slice(1, -1) // Remove the square brackets
+          .split(',') // Split by comma
+          .map(prop => prop.trim().replace(/['"`]/g, '')) // Trim and remove quotes
+      }
+      else {
+        const propsContent = match[1].trim()
+
+        // Match only the first level of keys in the object literal
+        const propNamesRegex = /([a-zA-Z$_][a-zA-Z\d$_]*)\s*:(?=\s*\{)/g
+        const propNames = []
+        let propMatch
+
+        // Using .exec() in a loop to find matches since it can find multiple matches
+        /* eslint-disable-next-line no-cond-assign */
+        while ((propMatch = propNamesRegex.exec(propsContent)) !== null) {
+          // The first group in the regex contains the prop name
+          propNames.push(propMatch[1])
+        }
+
+        return propNames
+      }
+    }
+    else {
+      return [] // No props found
+    }
   }
-  else {
+  catch (error) {
     /* eslint-disable-next-line no-console */
-    console.log('No props found in exported object')
+    console.log(error)
+    return [] // Return an empty array in case of an error
   }
 }

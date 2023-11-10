@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 // AUTHENTICATION
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -7,11 +9,13 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { auth, db } from '@/firebase'
 
 const isLoggedIn = ref(auth.currentUser !== null)
-const email = ref('')
+const email = ref(localStorage.getItem('ocd-username') || '')
 const password = ref('')
 function login() {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then(() => {
+      localStorage.setItem('ocd-username', email.value)
+
       isLoggedIn.value = true
       getProjects()
     })
@@ -22,6 +26,7 @@ getProjects()
 async function getProjects() {
   if (!auth.currentUser)
     return
+
   const q = query(collection(db, 'Projects'), where('collaborators', 'array-contains', auth.currentUser.uid))
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {

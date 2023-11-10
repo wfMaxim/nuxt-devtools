@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const headingFontStyles = ref(getHeadingFontStyles())
+
+parent.addEventListener('resize', () => {
+  headingFontStyles.value = ref(getHeadingFontStyles())
+})
+
 function getHeadingFontStyles() {
   const headingStyles = {};
 
@@ -16,8 +24,6 @@ function getHeadingFontStyles() {
 
   return headingStyles
 }
-
-const headingFontStyles = ref(getHeadingFontStyles())
 </script>
 
 <template>
