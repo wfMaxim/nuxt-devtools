@@ -3,9 +3,9 @@ import { ref } from 'vue'
 
 const headingFontStyles = ref(getHeadingFontStyles())
 
-parent.addEventListener('resize', () => {
-  headingFontStyles.value = ref(getHeadingFontStyles())
-})
+// parent.addEventListener('resize', () => {
+//   headingFontStyles.value = ref(getHeadingFontStyles())
+// })
 
 function getHeadingFontStyles() {
   const headingStyles = {};
