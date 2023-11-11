@@ -51,39 +51,27 @@ export async function getComponentProps(componentPath) {
     const content = await fs.readFile(filePath, 'utf-8')
     const { descriptor, errors } = parse(content)
 
-    if (errors && errors.length > 0) {
-      /* eslint-disable-next-line no-console */
-      console.error('Errors while parsing the Vue file:', errors)
+    if (errors && errors.length > 0)
       return {}
-    }
 
-    if (!descriptor) {
-      /* eslint-disable-next-line no-console */
-      console.error('Descriptor is undefined. The Vue file may not be correctly formatted.')
+    if (!descriptor)
       return {}
-    }
 
     if (descriptor.scriptSetup) {
       const scriptContent = descriptor.scriptSetup.content
       // Here you can use scriptContent to get your component props
       // You can either parse the scriptContent manually or try to execute it in a safe environment
-      /* eslint-disable-next-line no-console */
-      console.log('Script Setup Content:', extractPropsFromScript(scriptContent))
-      return scriptContent || []
+      return extractPropsFromScript(scriptContent) || []
     }
 
     if (descriptor.script) {
       const scriptContent = descriptor.script.content
       // Here you can use scriptContent to get your component props
       // You can either parse the scriptContent manually or try to execute it in a safe environment
-      /* eslint-disable-next-line no-console */
-      console.log('Script Content:', extractPropsFromScript(scriptContent))
-      return scriptContent || []
+      return extractPropsFromScript(scriptContent) || []
     }
   }
   catch (error) {
-    /* eslint-disable-next-line no-console */
-    console.error(`Error while importing component: ${error}`)
     return {}
   }
 }
@@ -168,8 +156,6 @@ function extractPropsFromOptionsAPI(scriptContent) {
     }
   }
   catch (error) {
-    /* eslint-disable-next-line no-console */
-    console.log(error)
     return [] // Return an empty array in case of an error
   }
 }

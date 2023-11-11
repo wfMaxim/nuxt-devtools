@@ -21,12 +21,12 @@ const componentGroups = [
   },
 ]
 
-// function test(component) {
-//   // eslint-disable-next-line no-console
-//   console.log('component clicked: ', component)
-//   // eslint-disable-next-line no-console
-//   console.log('all components', client.value?.nuxt?.vueApp._context.components)
-// }
+function test(component) {
+  // eslint-disable-next-line no-console
+  console.log('component clicked: ', component)
+  // eslint-disable-next-line no-console
+  console.log('all components', client.value?.nuxt?.vueApp._context.components)
+}
 </script>
 
 <template>
@@ -50,9 +50,9 @@ const componentGroups = [
           <ComponentItem
             v-bind="c"
           />
-          <!-- <button @click="test(c)">
+          <button @click="test(c)">
             test
-          </button> -->
+          </button>
         </div>
       </NSectionBlock>
     </template>
